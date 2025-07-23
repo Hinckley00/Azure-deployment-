@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import "./BookForm.css";
+import PropTypes from "prop-types";
 
 const statusOptions = ["Read", "In Progress", "Not Started"];
 
@@ -57,4 +58,10 @@ export default function BookForm({ initialData, onSubmit, onCancel }) {
       </form>
     </div>
   );
-} 
+}
+
+BookForm.propTypes = {
+  initialData: PropTypes.object,
+  onSubmit: PropTypes.func.isRequired,
+  onCancel: PropTypes.func.isRequired,
+}; 

@@ -9,7 +9,7 @@ import booksRouter from "./routes/books.js";
 dotenv.config();
 
 const app = express();
-const port = process.env.PORT;
+const port = process.env.PORT || 5000;
 
 // Fix __dirname for ES modules
 const __filename = fileURLToPath(import.meta.url);
@@ -36,17 +36,22 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
-
 // Start server and DB
 app.listen(port, () => {
   console.log(`✅ Server is running on port ${port}`);
 });
 
+// Connect to MongoDB
 mongoose
-  .connect(process.env.DB_CONNECTION)
-  .then(() => {
-    console.log("Connection to database successful! 🚀");
+  .connect(process.env.MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
   })
+  .then(() => console.log("MongoDB connected ✅"))
   .catch((err) => {
-    console.error("Connection to database failed! ❌", err);
+    console.error("MongoDB connection error:", err);
+    process.exit(1);
   });
+
+// NOTE: If deploying React, ensure the build output is served from the correct directory, e.g.:
+// app.use(express.static(path.join(__dirname, "../client/dist")));

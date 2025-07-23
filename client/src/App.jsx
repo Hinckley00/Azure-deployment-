@@ -3,6 +3,7 @@ import axios from "axios";
 import BookList from "./components/BookList";
 import BookForm from "./components/BookForm";
 import "./App.css";
+import PropTypes from "prop-types";
 
 function App() {
   const [books, setBooks] = useState([]);
@@ -15,16 +16,20 @@ function App() {
   const [statusFilter, setStatusFilter] = useState("");
   const [genreFilter, setGenreFilter] = useState("");
 
+  const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:5000";
+
   // Fetch books from backend with filters
   async function fetchBooks(params = {}) {
     setLoading(true);
     try {
       const query = new URLSearchParams(params).toString();
-      const res = await axios.get(`http://localhost:5000/api/books${query ? `?${query}` : ""}`);
+      const res = await axios.get(
+        `${API_BASE}/api/books${query ? `?${query}` : ""}`
+      );
       setBooks(res.data);
       setError("");
-    } catch {
-      setError("Failed to fetch books");
+    } catch (err) {
+      setError(err.response?.data?.message || "Failed to fetch books");
     }
     setLoading(false);
   }
@@ -40,31 +45,31 @@ function App() {
 
   async function handleAdd(book) {
     try {
-      await axios.post("http://localhost:5000/api/books", book);
+      await axios.post(`${API_BASE}/api/books`, book);
       fetchBooks();
       setShowForm(false);
-    } catch {
-      setError("Failed to add book");
+    } catch (err) {
+      setError(err.response?.data?.message || "Failed to add book");
     }
   }
 
   async function handleEdit(book) {
     try {
-      await axios.put(`http://localhost:5000/api/books/${book._id}`, book);
+      await axios.put(`${API_BASE}/api/books/${book._id}`, book);
       fetchBooks();
       setEditBook(null);
-    } catch {
-      setError("Failed to update book");
+    } catch (err) {
+      setError(err.response?.data?.message || "Failed to update book");
     }
   }
 
   async function handleDelete(id) {
     if (!window.confirm("Delete this book?")) return;
     try {
-      await axios.delete(`http://localhost:5000/api/books/${id}`);
+      await axios.delete(`${API_BASE}/api/books/${id}`);
       setBooks((prev) => prev.filter((b) => b._id !== id));
-    } catch {
-      setError("Failed to delete book");
+    } catch (err) {
+      setError(err.response?.data?.message || "Failed to delete book");
     }
   }
 
@@ -145,5 +150,7 @@ function App() {
     </div>
   );
 }
+
+App.propTypes = {};
 
 export default App;
