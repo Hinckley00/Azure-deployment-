@@ -11,7 +11,7 @@
 }
 .book-card:hover {
   transform: translateY(-4px) scale(1.02);
-  box-shadow: 0 6px 24px rgba(0,0,0,0.13);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.13);
 }
 .book-card-header {
   display: flex;
@@ -24,14 +24,15 @@
   padding: 0.2rem 0.7rem;
   border-radius: 8px;
   font-weight: 600;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
 }
 .book-card-actions {
   display: flex;
   gap: 0.7rem;
   margin-top: 0.5rem;
 }
-.edit-btn, .delete-btn {
+.edit-btn,
+.delete-btn {
   border: none;
   padding: 0.4rem 1.1rem;
   border-radius: 6px;
@@ -60,4 +61,27 @@
   .book-card-header h3 {
     font-size: 1.1rem;
   }
-} 
+}
+@media (max-width: 400px) {
+  .book-card {
+    padding: 0.5rem;
+    font-size: 0.95rem;
+  }
+  .book-card-header h3 {
+    font-size: 1rem;
+  }
+  .book-status {
+    font-size: 0.75rem;
+    padding: 0.15rem 0.5rem;
+  }
+  .book-card-actions {
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+  .edit-btn,
+  .delete-btn {
+    width: 100%;
+    padding: 0.3rem 0.7rem;
+    font-size: 0.95rem;
+  }
+}

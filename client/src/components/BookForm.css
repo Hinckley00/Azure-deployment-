@@ -81,3 +81,24 @@
     min-width: 90vw;
   }
 }
+@media (max-width: 400px) {
+  .book-form {
+    padding: 0.7rem 0.2rem;
+    min-width: 98vw;
+    font-size: 0.95rem;
+  }
+  .book-form input,
+  .book-form select {
+    font-size: 0.95rem;
+    padding: 0.4rem;
+  }
+  .form-actions {
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+  .book-form button {
+    width: 100%;
+    font-size: 0.95rem;
+    padding: 0.4rem 0.7rem;
+  }
+}
